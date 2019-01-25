@@ -153,11 +153,12 @@ function getTrackList(id) {
             //console.log(o.responseText);
         }
     };
-    var csrftoken = $.cookie('csrftoken');
+    var match = document.cookie.match(new RegExp('(^| )csrftoken=([^;]+)'));
+    match = match ? match[2] : '';
     o.open("POST", 'https://www.mixcloud.com/graphql', !0);
     o.setRequestHeader('content-type', 'application/json');
     o.setRequestHeader('accept', 'application/json');
-    o.setRequestHeader("x-csrftoken", csrftoken);
+    o.setRequestHeader("x-csrftoken", match);
     o.setRequestHeader("x-requested-with", "XMLHttpRequest");
     o.send(post_data);
 }
