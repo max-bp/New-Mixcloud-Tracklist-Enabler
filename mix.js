@@ -56,7 +56,7 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
             var thispath = window.location.pathname.split('/'),
                 slug = cleanArray(thispath);
             slug = slug[slug.length - 1];
-            if (slug !== cloudcasts[cloudcast].cloudcast.data.cloudcastLookup.slug) {
+            if (slug !== encodeURI(cloudcasts[cloudcast].cloudcast.data.cloudcastLookup.slug)) {
                 alert("Either this isn't a mix, or you'll need to refresh to see the Tracklist");
             } else {
                 //debugger;
