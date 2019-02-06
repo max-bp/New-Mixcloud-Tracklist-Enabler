@@ -1,11 +1,11 @@
 # Mixcloud-Tracklist-Enabler v2
-It's new javascript - it displays the tracklist the same way it did before they changed their licensing. 
+It's new javascript - it displays the tracklist at mixcloud the same way it did before they changed their licensing. 
 
 It supports the new Mixcloud website for **2019 year**
 
 Make link in your quick link bar and change URL of this link to this code:
 ```
-javascript:(function(){var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@8d9ee65b569a8fbf79cf1dd05b90b4a107a3c9f4/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);;}})();
+javascript:(function(){var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@b1f547f52868f6203d6cfbbdad4000e606551c74/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);;}})();
 ```
 
 ## Thanks
