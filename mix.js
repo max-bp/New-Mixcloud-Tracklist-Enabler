@@ -31,8 +31,6 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
             var thispath = window.location.pathname.split('/'), slug = cleanArray(thispath),artist=slug[0];
                 slug = slug[1];
                 getTrackList(artist,slug);
-            break;
-        }
     },
     gmloadScript = function (sScriptSrc) {
         var oHead = document.getElementsByTagName('head')[0],
