@@ -136,7 +136,7 @@ function getTrackId(art,id) {
     //console.log('get tracks for id ' + id);
 
     post_data = '{"id": "q8","query": "query CloudcastStyleOverride($lookup_0:CloudcastLookup!,$lighten_1:Int!) {cloudcastLookup(lookup:$lookup_0) {id,...F0}} fragment F0 on Cloudcast {picture {primaryColor,isLight,_primaryColor2pfPSM:primaryColor(lighten:$lighten_1),_primaryColor1FK17O:primaryColor(darken:$lighten_1)},id}",'+
-        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "lighten_1": 15}}';
+        '"variables":{ "lookup_0": { "username": "'+decodeURIComponent(art)+'", "slug": "'+decodeURIComponent(id)+'" }, "lighten_1": 15}}';
     var o;
     o = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
     o.onreadystatechange = function () {
