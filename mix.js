@@ -28,40 +28,10 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
     },
 
     getSectionData = function () {
-        var raperelaydata = JSON.parse(htmlDecode(document.getElementById('relay-data').innerHTML)),
-            cloudcasts = $.grep(raperelaydata, function (e) {
-                return e.cloudcast;
-            });
-        if (!cloudcasts.length) {
-            alert("Either this isn't a mix, or you'll need to refresh to see the Tracklist");
-            return;
-        }
-        var j = 0;
-        for (var cloudcast in cloudcasts) {
-            j++;
-            if (!cloudcasts[cloudcast].hasOwnProperty('viewer')) {
-                if (j === cloudcasts.length) {
-                    alert("Either this isn't a mix, or you'll need to refresh to see the Tracklist");
-                    return;
-                }
-                continue;
-            }
-            if (!cloudcasts[cloudcast].cloudcast.data.cloudcastLookup.hasOwnProperty('sections')) {
-                if (j === cloudcasts.length) {
-                    alert("Either this isn't a mix, or you'll need to refresh to see the Tracklist");
-                    return;
-                }
-                continue;
-            }
             var thispath = window.location.pathname.split('/'),
-                slug = cleanArray(thispath);
-            slug = slug[slug.length - 1];
-            if (slug !== encodeURI(cloudcasts[cloudcast].cloudcast.data.cloudcastLookup.slug)) {
-                alert("Either this isn't a mix, or you'll need to refresh to see the Tracklist");
-            } else {
-                //debugger;
-                getTrackList(cloudcasts[cloudcast].cloudcast.data.cloudcastLookup.id);
-            }
+            var slug = cleanArray(thispath),artist=slug[0];
+                slug = slug[1];
+                getTrackList(artist,slug);
             break;
         }
     },
@@ -141,13 +111,15 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
         return;
     };
 
-function getTrackList(id) {
+function getTrackList(art,id) {
     //console.log('get tracks for id ' + id);
-    post_data = '{"id":"q72","query":"query PlayerControls($id_0:ID!) {cloudcast(id:$id_0) {id,...Ff}} fragment F0 on User {id,isFollowed,isFollowing,isViewer,followers {totalCount},username,displayName} fragment F1 on Picture {urlRoot,primaryColor} fragment F2 on Cloudcast {id,isPublic,isFavorited,owner {id,username,displayName,isFollowing,isViewer},favorites {totalCount},slug} fragment F3 on Cloudcast {id,isUnlisted,isPublic} fragment F4 on Cloudcast {id,isUnlisted,isPublic,slug,description,picture {urlRoot},owner {displayName,isViewer,username,id}} fragment F5 on Cloudcast {id,isReposted,isPublic,reposts {totalCount},owner {isViewer,id}} fragment F6 on Cloudcast {id,isPublic,restrictedReason,owner {isViewer,id}} fragment F7 on Cloudcast {isPublic,owner {isViewer,id},id,...F2,...F3,...F4,...F5,...F6} fragment F8 on Cloudcast {owner {displayName,isSelect,username,id},seekRestriction,id} fragment F9 on TrackSection {artistName,songName,startSeconds,id} fragment Fa on ChapterSection {chapter,startSeconds,id} fragment Fb on Node {id,__typename} fragment Fc on Cloudcast {juno {guid,chartUrl},sections {__typename,...F9,...Fa,...Fb},id} fragment Fd on Cloudcast {id,waveformUrl,owner {id,isFollowing,isViewer},seekRestriction,...F8,...Fc} fragment Fe on Cloudcast {isExclusive,isExclusivePreviewOnly,slug,owner {username,id},id} fragment Ff on Cloudcast {id,name,slug,isPublic,isExclusive,isExclusivePreviewOnly,owner {id,username,isFollowing,isViewer,displayName,followers {totalCount},...F0},picture {...F1},...F7,...Fd,...Fe}","variables":{"id_0":"' + id + '"}}';
+    post_data = '{"id":"q72","query":"query PlayerControls($id_0:ID!) {cloudcast(id:$id_0) {id,...Ff}} fragment F0 on User {id,isFollowed,isFollowing,isViewer,followers {totalCount},username,displayName} fragment F1 on Picture {urlRoot,primaryColor} fragment F2 on Cloudcast {id,isPublic,isFavorited,owner {id,username,displayName,isFollowing,isViewer},favorites {totalCount},slug} fragment F3 on Cloudcast {id,isUnlisted,isPublic} fragment F4 on Cloudcast {id,isUnlisted,isPublic,slug,description,picture {urlRoot},owner {displayName,isViewer,username,id}} fragment F5 on Cloudcast {id,isReposted,isPublic,reposts {totalCount},owner {isViewer,id}} fragment F6 on Cloudcast {id,isPublic,restrictedReason,owner {isViewer,id}} fragment F7 on Cloudcast {isPublic,owner {isViewer,id},id,...F2,...F3,...F4,...F5,...F6} fragment F8 on Cloudcast {owner {displayName,isSelect,username,id},seekRestriction,id} fragment F9 on TrackSection {artistName,songName,startSeconds,id} fragment Fa on ChapterSection {chapter,startSeconds,id} fragment Fb on Node {id,__typename} fragment Fc on Cloudcast {juno {guid,chartUrl},sections {__typename,...F9,...Fa,...Fb},id} fragment Fd on Cloudcast {id,waveformUrl,owner {id,isFollowing,isViewer},seekRestriction,...F8,...Fc} fragment Fe on Cloudcast {isExclusive,isExclusivePreviewOnly,slug,owner {username,id},id} fragment Ff on Cloudcast {id,name,slug,isPublic,isExclusive,isExclusivePreviewOnly,owner {id,username,isFollowing,isViewer,displayName,followers {totalCount},...F0},picture {...F1},...F7,...Fd,...Fe}",'+
+        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "first_1": 10, "filter_2": "FOLLOWING" }}';
     var o;
     o = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
     o.onreadystatechange = function () {
         if (4 == o.readyState && 200 == o.status) {
+            console.log(o.responseText);
             var raperelaydata = JSON.parse(o.responseText)
             if (raperelaydata) insertMTEButton(formatTracks(raperelaydata.data.cloudcast.sections));
             //console.log(o.responseText);
