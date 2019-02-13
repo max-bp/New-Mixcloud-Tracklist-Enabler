@@ -9,7 +9,8 @@ javascript:(function(){var rnd = Math.floor(Math.random()*9999999999);mcrape=doc
 ```
 
 **Note!**
-From time to time, 1 changes the structure of the site, so the code stops working. In this case, you need to go here and copy the new code into the quick link.
+
+From time to time, Mixcloud changes the structure of the site, so the code stops working. In this case, you need to go here and copy the new code into the quick link.
 
 ## Thanks
  - [mrbrainz](https://github.com/mrbrainz) for original script version :heart:
