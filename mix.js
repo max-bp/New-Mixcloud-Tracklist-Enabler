@@ -30,7 +30,7 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
     getSectionData = function () {
             var thispath = window.location.pathname.split('/'), slug = cleanArray(thispath),artist=slug[0];
                 slug = slug[1];
-                getTrackList(artist,slug);
+                getTrackId(artist,slug);
     },
     gmloadScript = function (sScriptSrc) {
         var oHead = document.getElementsByTagName('head')[0],
@@ -107,13 +107,51 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
 
         return;
     };
-
-function getTrackList(art,id) {
-    //console.log('get tracks for id ' + id);
-    post_data = '{"id": "q25","query": "query CloudcastPage($lookup_0:CloudcastLookup!,$first_1:Int!,$filter_2:UserConnectionFilterEnum!) {cloudcastLookup(lookup:$lookup_0) {id,...Fb}} fragment F0 on TrackSection {artistName,songName,id} fragment F1 on ChapterSection {chapter,id} fragment F2 on Node {id,__typename} fragment F3 on Cloudcast {slug,owner {username,isViewer,displayName,id},canShowTracklist,juno {guid,chartUrl},sections {__typename,...F0,...F1,...F2},id} fragment F4 on Picture {urlRoot,primaryColor} fragment F5 on User {id} fragment F6 on Cloudcast {slug,plays,owner {username,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id,username,displayName,picture {...F4},...F5}},pageInfo {hasNextPage,hasPreviousPage}},id} fragment F7 on Cloudcast {featuringArtistList,moreFeaturingArtists,owner {isViewer,id},id} fragment F8 on CloudcastTag {tag {name,slug,isCategory,id},position} fragment F9 on Cloudcast {tags {tag {name,slug,isChart,isCategory,id},position,bestPosition,...F8},id} fragment Fa on Cloudcast {id,description,attribution {name,website,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id}},pageInfo {hasNextPage,hasPreviousPage}},featuringArtistList,owner {isViewer,isSelect,id},tags {tag {name,id}},...F6,...F7,...F9} fragment Fb on Cloudcast {name,slug,owner {displayName,username,isViewer,isSelect,id},id,...F3,...Fa}",'+
-        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "first_1": 10, "filter_2": "FOLLOWING" }}';
+function getTrackList(id)
+{
+        
+    post_data = '{"id":"q35","query":"query PlayerControls($id_0:ID!) {cloudcast(id:$id_0) {id,...Ff}} fragment F0 on User {id,isFollowed,isFollowing,isViewer,followers {totalCount},username,displayName} fragment F1 on Picture {urlRoot,primaryColor} fragment F2 on Cloudcast {id,isPublic,isFavorited,owner {id,username,displayName,isFollowing,isViewer},favorites {totalCount},slug} fragment F3 on Cloudcast {id,isUnlisted,isPublic} fragment F4 on Cloudcast {id,isUnlisted,isPublic,slug,description,picture {urlRoot},owner {displayName,isViewer,username,id}} fragment F5 on Cloudcast {id,isReposted,isPublic,reposts {totalCount},owner {isViewer,id}} fragment F6 on Cloudcast {id,isPublic,restrictedReason,owner {isViewer,id}} fragment F7 on Cloudcast {isPublic,owner {isViewer,id},id,...F2,...F3,...F4,...F5,...F6} fragment F8 on Cloudcast {owner {displayName,isSelect,username,id},seekRestriction,id} fragment F9 on TrackSection {artistName,songName,startSeconds,id} fragment Fa on ChapterSection {chapter,startSeconds,id} fragment Fb on Node {id,__typename} fragment Fc on Cloudcast {juno {guid,chartUrl},sections {__typename,...F9,...Fa,...Fb},id} fragment Fd on Cloudcast {id,waveformUrl,owner {id,isFollowing,isViewer},seekRestriction,...F8,...Fc} fragment Fe on Cloudcast {isExclusive,isExclusivePreviewOnly,slug,owner {username,id},id} fragment Ff on Cloudcast {id,name,slug,isPublic,isExclusive,isExclusivePreviewOnly,owner {id,username,isFollowing,isViewer,displayName,followers {totalCount},...F0},picture {...F1},...F7,...Fd,...Fe}",'+
+        '"variables":{"id_0":"'+id+'"}}';
     var o;
     o = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
+    o.onreadystatechange = function () {
+        if (4 == o.readyState && 200 == o.status) {
+            console.log(o.responseText);
+            var raperelaydata = JSON.parse(o.responseText)
+            if (raperelaydata) insertMTEButton(formatTracks(raperelaydata.data.cloudcast.sections));
+            //console.log(o.responseText);
+        }
+    };
+    var match = document.cookie.match(new RegExp('(^| )csrftoken=([^;]+)'));
+    match = match ? match[2] : '';
+    o.open("POST", 'https://www.mixcloud.com/graphql', !0);
+    o.setRequestHeader('content-type', 'application/json');
+    o.setRequestHeader('accept', 'application/json');
+    o.setRequestHeader("x-csrftoken", match);
+    o.setRequestHeader("x-requested-with", "XMLHttpRequest");
+    o.send(post_data);
+
+}
+function getTrackId(art,id) {
+    //console.log('get tracks for id ' + id);
+
+    post_data = '{"id": "q8","query": "query CloudcastStyleOverride($lookup_0:CloudcastLookup!,$lighten_1:Int!) {cloudcastLookup(lookup:$lookup_0) {id,...F0}} fragment F0 on Cloudcast {picture {primaryColor,isLight,_primaryColor2pfPSM:primaryColor(lighten:$lighten_1),_primaryColor1FK17O:primaryColor(darken:$lighten_1)},id}",'+
+        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "lighten_1": 15}}';
+    var o;
+    o = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
+    o.onreadystatechange = function () {
+        if (4 == o.readyState && 200 == o.status) {
+            console.log(o.responseText);
+            var raperelaydata = JSON.parse(o.responseText)
+            if (raperelaydata) getTrackList(raperelaydata.data.cloudcastLookup.id);
+            //console.log(o.responseText);
+        }
+    };
+    
+    
+    
+    post_data = '{"id": "q25","query": "query CloudcastPage($lookup_0:CloudcastLookup!,$first_1:Int!,$filter_2:UserConnectionFilterEnum!) {cloudcastLookup(lookup:$lookup_0) {id,...Fb}} fragment F0 on TrackSection {artistName,songName,id} fragment F1 on ChapterSection {chapter,id} fragment F2 on Node {id,__typename} fragment F3 on Cloudcast {slug,owner {username,isViewer,displayName,id},canShowTracklist,juno {guid,chartUrl},sections {__typename,...F0,...F1,...F2},id} fragment F4 on Picture {urlRoot,primaryColor} fragment F5 on User {id} fragment F6 on Cloudcast {slug,plays,owner {username,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id,username,displayName,picture {...F4},...F5}},pageInfo {hasNextPage,hasPreviousPage}},id} fragment F7 on Cloudcast {featuringArtistList,moreFeaturingArtists,owner {isViewer,id},id} fragment F8 on CloudcastTag {tag {name,slug,isCategory,id},position} fragment F9 on Cloudcast {tags {tag {name,slug,isChart,isCategory,id},position,bestPosition,...F8},id} fragment Fa on Cloudcast {id,description,attribution {name,website,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id}},pageInfo {hasNextPage,hasPreviousPage}},featuringArtistList,owner {isViewer,isSelect,id},tags {tag {name,id}},...F6,...F7,...F9} fragment Fb on Cloudcast {name,slug,owner {displayName,username,isViewer,isSelect,id},id,...F3,...Fa}",'+
+        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "first_1": 10, "filter_2": "FOLLOWING" }}';
     o.onreadystatechange = function () {
         if (4 == o.readyState && 200 == o.status) {
             console.log(o.responseText);
