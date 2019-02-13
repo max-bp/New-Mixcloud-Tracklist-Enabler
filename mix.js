@@ -147,19 +147,6 @@ function getTrackId(art,id) {
             //console.log(o.responseText);
         }
     };
-    
-    
-    
-    post_data = '{"id": "q25","query": "query CloudcastPage($lookup_0:CloudcastLookup!,$first_1:Int!,$filter_2:UserConnectionFilterEnum!) {cloudcastLookup(lookup:$lookup_0) {id,...Fb}} fragment F0 on TrackSection {artistName,songName,id} fragment F1 on ChapterSection {chapter,id} fragment F2 on Node {id,__typename} fragment F3 on Cloudcast {slug,owner {username,isViewer,displayName,id},canShowTracklist,juno {guid,chartUrl},sections {__typename,...F0,...F1,...F2},id} fragment F4 on Picture {urlRoot,primaryColor} fragment F5 on User {id} fragment F6 on Cloudcast {slug,plays,owner {username,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id,username,displayName,picture {...F4},...F5}},pageInfo {hasNextPage,hasPreviousPage}},id} fragment F7 on Cloudcast {featuringArtistList,moreFeaturingArtists,owner {isViewer,id},id} fragment F8 on CloudcastTag {tag {name,slug,isCategory,id},position} fragment F9 on Cloudcast {tags {tag {name,slug,isChart,isCategory,id},position,bestPosition,...F8},id} fragment Fa on Cloudcast {id,description,attribution {name,website,id},_listeners2PPRJR:listeners(first:$first_1,filter:$filter_2) {edges {cursor,node {id}},pageInfo {hasNextPage,hasPreviousPage}},featuringArtistList,owner {isViewer,isSelect,id},tags {tag {name,id}},...F6,...F7,...F9} fragment Fb on Cloudcast {name,slug,owner {displayName,username,isViewer,isSelect,id},id,...F3,...Fa}",'+
-        '"variables":{ "lookup_0": { "username": "'+art+'", "slug": "'+id+'" }, "first_1": 10, "filter_2": "FOLLOWING" }}';
-    o.onreadystatechange = function () {
-        if (4 == o.readyState && 200 == o.status) {
-            console.log(o.responseText);
-            var raperelaydata = JSON.parse(o.responseText)
-            if (raperelaydata) insertMTEButton(formatTracks(raperelaydata.data.cloudcast.sections));
-            //console.log(o.responseText);
-        }
-    };
     var match = document.cookie.match(new RegExp('(^| )csrftoken=([^;]+)'));
     match = match ? match[2] : '';
     o.open("POST", 'https://www.mixcloud.com/graphql', !0);
