@@ -31,8 +31,8 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
     getSectionData = function () {
         var thispath = window.location.pathname.split('/');
         slug = cleanArray(thispath);
-        artist = slug[0];
-        slug = slug[1];
+        artist = decodeURIComponent(slug[0]);
+        slug = decodeURIComponent(slug[1]);
         //getTrackId(artist, slug);
         getTrackId();
     },
@@ -116,9 +116,10 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
 function setTrackDivs(len) {
     try {
         if ($('.player-already-open-message').length === 1 || $('.player-open') === 0) return; // mix navbar is not shown
-        var all_div = [], per = len / 100, to_ins = '';
+        var all_div = [], skip_div = [], per = len / 100, to_ins = '';
         for (var track in all_tracks) {
             if (all_tracks[track].startSeconds) {
+                if (all_tracks[track].chapter && all_tracks[track].chapter == 'UNKNOWN') skip_div[all_div.length] = 1; // skip unknown parts
                 all_div[all_div.length] = (parseInt(all_tracks[track].startSeconds) / per).toFixed(2);
             }
         }
@@ -192,7 +193,7 @@ function getTrackId() {
     //console.log('get tracks for id ' + id);
 
     post_data = '{"id": "q8","query": "query CloudcastStyleOverride($lookup_0:CloudcastLookup!,$lighten_1:Int!) {cloudcastLookup(lookup:$lookup_0) {id,...F0}} fragment F0 on Cloudcast {picture {primaryColor,isLight,_primaryColor2pfPSM:primaryColor(lighten:$lighten_1),_primaryColor1FK17O:primaryColor(darken:$lighten_1)},id}",' +
-        '"variables":{ "lookup_0": { "username": "' + decodeURIComponent(artist) + '", "slug": "' + decodeURIComponent(slug) + '" }, "lighten_1": 15}}';
+        '"variables":{ "lookup_0": { "username": "' + artist + '", "slug": "' + slug + '" }, "lighten_1": 15}}';
     var o;
     o = window.XMLHttpRequest ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
     o.onreadystatechange = function () {
