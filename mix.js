@@ -118,7 +118,7 @@ function setTrackDivs(len) {
         if ($('.player-already-open-message').length === 1 || $('.player-open') === 0) return; // mix navbar is not shown
         var all_div = [], skip_div = [], per = len / 100, to_ins = '';
         for (var track in all_tracks) {
-            if (all_tracks[track].startSeconds) {
+            if (all_tracks[track].startSeconds || all_tracks[track].startSeconds===0) {
                 if (all_tracks[track].chapter && all_tracks[track].chapter == 'UNKNOWN') skip_div[all_div.length] = 1; // skip unknown parts
                 all_div[all_div.length] = (parseInt(all_tracks[track].startSeconds) / per).toFixed(2);
             }
