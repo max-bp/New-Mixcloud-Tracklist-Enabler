@@ -51,16 +51,18 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
         //return (s - (s %= 60)) / 60 + (9 < s ? ':' : ':0') + s;
     },
     formatTracks = function (trackdata) {
-        tracks = "";
-        timeindexes = '';
-        trackno = 1;
-        showhidebutton = '';
+        var tracks = "",
+            timeindexes = '',
+            trackno = 1,
+            showhidebutton = '',
+            t = '';
 
         for (var track in trackdata) {
             starttime = (trackdata[track].startSeconds) ? trackdata[track].startSeconds : '';
             if (trackdata[track].__typename == "ChapterSection") {
+                t = (trackdata[track].chapter == 'UNKNOWN') ? '&mdash;' : trackdata[track].chapter;
                 //tracks += '<li ng-hide="juno.sections.length" class=""><em>' + trackno + '</em><b title="' + trackdata[track].chapter + '">' + trackdata[track].chapter + '</b> <span class="starttime"> | ' + fmtMSS(starttime) + '</span></li>';
-                tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em></td><td><b title="' + trackdata[track].chapter + '">' + trackdata[track].chapter + '</b></td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
+                tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em></td><td><b title="' + t + '">' + trackdata[track].chapter + '</b></td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
             } else {
                 //tracks += '<li ng-hide="juno.sections.length" class=""><em>' + trackno + '</em><b title="' + trackdata[track].songName + '">' + trackdata[track].songName + '</b> <small>by <span>' + trackdata[track].artistName + '</span></small><span class="starttime"> | ' + fmtMSS(starttime) + '</span></li>';
                 tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em></td><td><b title="' + trackdata[track].songName + '">' + trackdata[track].songName + '</b> – ' + trackdata[track].artistName + '</td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
