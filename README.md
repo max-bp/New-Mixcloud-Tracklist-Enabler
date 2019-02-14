@@ -5,7 +5,7 @@ It supports the new Mixcloud website for **2019 year**
 
 Make link in your quick link bar and change URL of this link to this code:
 ```
-javascript:(function(){var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@bf9a28a4921c5ed791e073733e16a4fe22c5bb14/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);;}})();
+javascript:(function(){var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@7857c704007a9cf8fb00527d1b390907369cc7ae/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);;}})();
 ```
 
 **Note!**
