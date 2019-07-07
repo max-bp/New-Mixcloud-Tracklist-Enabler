@@ -56,7 +56,7 @@ var jqsrc = '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
                 t = (trackdata[track].chapter == 'UNKNOWN') ? '&mdash;' : trackdata[track].chapter;
                 tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em>&nbsp;</td><td><b title="' + trackdata[track].chapter + '">' + t + '</b>&nbsp;</td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
             } else {
-                tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em>&nbsp;</td><td><b title="' + trackdata[track].songName + '">' + trackdata[track].songName + '</b> – ' + trackdata[track].artistName + '&nbsp;</td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
+                tracks += '<tr style="border-bottom: 1px dotted #dce5e8;"><td><em>' + trackno + '</em>&nbsp;</td><td><b title="' + trackdata[track].songName + '">' + trackdata[track].artistName + '</b> – ' + trackdata[track].songName + '&nbsp;</td><td align="right">' + fmtMSS(starttime) + '</td></tr>';
             }
 
             trackno++;
