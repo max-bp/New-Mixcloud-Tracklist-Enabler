@@ -117,7 +117,7 @@ function setTrackDivs(len) {
         if (all_div.length < 3) return;
         for (var i = 0; i <= all_div.length - 1; i++) {
             if (skip_div[i] == 1) continue;
-            to_ins = '<div style="position: absolute;left: ' + all_div[i] + '%;width: ' + (all_div[i + 1] - all_div[i]).toFixed(2) + '%;background-color: #4fa6d3;height: 100%;opacity: 0.5;border-radius: 3px;border-right: 1px solid #000;"></div>';
+            to_ins = '<div style="position: absolute;left: ' + all_div[i] + '%;width: ' + (all_div[i + 1] - all_div[i]).toFixed(2) + '%;background-color: #4fa6d3;height: 100%;top:-5px;opacity: 0.5;border-radius: 3px;border-right: 1px solid #000;"></div>';
             $('.player-scrubber-buffered').append(to_ins);
             $('.show-header-waveform').append(to_ins);
         }
