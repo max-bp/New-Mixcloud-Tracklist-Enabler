@@ -5,7 +5,7 @@ It supports the new Mixcloud website for **2019 year**
 
 Make link in your quick link bar and change URL of this link to this code:
 ```
-javascript:(function(){if(typeof mixCloudEnabler !== 'undefined' && mixCloudEnabler==1) getSectionData(); else {var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@a744545129cf1b36dc6448ae5f83f25f4dec399d/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);}}})();
+javascript:(function(){if(typeof mixCloudEnabler !== 'undefined' && mixCloudEnabler==1) getSectionData(); else {var rnd = Math.floor(Math.random()*9999999999);mcrape=document.createElement('SCRIPT');mcrape.type='text/javascript';mcrape.id='nssc-script';mcrape.src='https://cdn.jsdelivr.net/gh/max-bp/New-Mixcloud-Tracklist-Enabler@fdc20549f4ab6a6fca9e80c6b1e4081d8da5f463/mix.js?'+rnd;var nsscs=document.getElementById('nssc-script');if (nsscs == null){document.getElementsByTagName('head')[0].appendChild(mcrape);}}})();
 ```
 
 **Note!**
